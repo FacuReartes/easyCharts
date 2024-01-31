@@ -25,7 +25,7 @@ function InputBox({}: Props) {
 
   // DEFAULT VALUES??
   return (
-    <div className='px-64'>
+    <div className='xl:px-64 lg:px-20 md:px-52 px-5'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex gap-2 justify-between'>
           <label htmlFor='Name'
@@ -73,7 +73,7 @@ function InputBox({}: Props) {
         <div className='py-2 flex justify-end'>
             <button 
               type='submit'
-              className='text-[#142d4c] border-[#142d4c] hover:bg-[#385170] hover:text-[#ececec] px-4 py-1 rounded-md border-2 delay-75 transition-all'>
+              className='bg-[#385170] text-[#ececec] rounded px-6 py-2 text-sm font-medium transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring'>
               Add
             </button>
         </div>
