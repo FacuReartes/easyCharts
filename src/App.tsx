@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Elements from './components/Elements';
+import InputBox from './components/InputBox';
+import PieChart from './components/PieChart';
+import ContextProvider from './context/ContextProvider';
 
-function App() {
+type Props = {}
+
+function App({}: Props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ContextProvider>
+      <div className='bg-[#ececec] h-screen'>
+        <div className='p-14 flex justify-center items-center'>
+          <h1 className='text-4xl text-[#142d4c]'>Quick Pie Chart</h1>
+        </div>
+        <div className='flex'>
+          <div className='px-12 basis-1/2'>
+            <h2 className='text-center py-6 text-2xl'>Add One Item</h2>
+            <InputBox/>
+            <h2 className='text-center py-4 text-2xl'>Elements</h2>
+            <Elements/>
+          </div>
+          <div className='px-12 basis-1/2'>
+            <PieChart/>
+          </div>
+        </div>
+      </div>
+    </ContextProvider>
+  )
 }
 
 export default App;
