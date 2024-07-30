@@ -1,33 +1,32 @@
-import React, { useContext } from 'react'
+import { FC, useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import Context from '../context/Context'
+import { ElementContext, ContextInterface, ElementInterface } from '../context/Context'
 
-type Props = {}
+// Handles input for creating elements
+const InputBox: FC = () => {
 
-function InputBox({}: Props) {
+  // Get list of elements
+  const { element, setElement } = useContext(ElementContext) as ContextInterface;
 
-  const { element, setElement } = useContext(Context) || { element: null, setElement: () => {} };
-  // VER SI HACEN FALTA TODSOS, SINO BORRAR
-  const { reset, register, handleSubmit, formState: { errors } } = useForm();
+  const { reset, register, handleSubmit } = useForm<ElementInterface>();
 
-  const onSubmit = (data: any) => {
-    
-    const newElement = {
-      id: element.length + 1,
+  const onSubmit = (data: ElementInterface) => {
+    // Creates new Element based on input data
+    const newElement: ElementInterface = {
       name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
-      value: parseInt(data.value, 10),
+      value: data.value,
       color: data.color
     }
-    
-    if(setElement) setElement([...element, newElement]);
+    // Add it to existing list
+    setElement([...element, newElement]);
     reset();
   }
 
-  // DEFAULT VALUES??
   return (
     <div className='xl:px-64 lg:px-20 md:px-52 px-5'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex gap-2 justify-between'>
+
           <label htmlFor='Name'
             className='p-1 relative rounded-md border border-gray-500 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600'>
             <input {...register("name", {
@@ -36,6 +35,7 @@ function InputBox({}: Props) {
                 message: "Max Length of 20 Characters"
               }
             })}
+              required
               type="text"
               id="Name"
               placeholder='Name'
@@ -53,23 +53,26 @@ function InputBox({}: Props) {
                 message: "Max Length of 10 Numbers"
               }
             })}
+              required
               type="number"
+              min="0"
               id="Value"
               placeholder='Value'
               className='min-w-0 w-20 peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0'/>
             <span className='pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-[#ececec] px-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs'>
-              Number
+              Value
             </span>
           </label>
+
           <div className='w-12 rounded-md px-1 border border-gray-500 shadow-sm flex justify-center items-center'>
-            <input {...register("color", {
-            
-            })}
+            <input {...register("color", {})}
               type="color"
               id="Color"
               className='h-full'/>
           </div>
+
         </div>
+
         <div className='py-2 flex justify-end'>
             <button 
               type='submit'
@@ -77,6 +80,7 @@ function InputBox({}: Props) {
               Add
             </button>
         </div>
+        
       </form>
     </div>
   )

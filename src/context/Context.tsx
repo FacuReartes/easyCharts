@@ -1,13 +1,16 @@
 import { createContext } from "react";
 
-interface ContextInterface {
-    element: any | null;
-    setElement: (value: any | null) => void; 
-    title: any | null;
-    setTitle: (value: any | null) => void;
-
+export interface ElementInterface {
+  name: string,
+  value: number,
+  color: string
 }
 
-const ElementContext = createContext<ContextInterface | null>(null);
+export interface ContextInterface {
+  element: ElementInterface[];
+  setElement: (value: ElementInterface[]) => void; 
+  title: string;
+  setTitle: (value: string) => void;
+}
 
-export default ElementContext;
+export const ElementContext = createContext<ContextInterface | null>(null);

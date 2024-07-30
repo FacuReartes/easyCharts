@@ -1,18 +1,15 @@
-import React, { useContext } from 'react'
-import Context from '../context/Context'
+import { FC, useContext } from 'react'
+import { ElementContext, ContextInterface, ElementInterface } from '../context/Context'
 import ElementsItems from './ElementsItems';
+// Container for the elements
+const Elements: FC = () => {
 
-type Props = {}
-
-function Elements({}: Props) {
-
-  const { element, setElement } = useContext(Context) || { gasto: null, setGasto: () => {} };
+  // Get list of elements - Maps them into HTML
+  const { element } = useContext(ElementContext) as ContextInterface;
 
   return (
-
-    //CENTRAR MEJOR LOS ELEMENTOS
     <div className='flex justify-center gap-5 flex-wrap'>
-        {element.map((x: any) => (
+        {element.map((x: ElementInterface) => (
             <ElementsItems name={x.name} value={x.value} color={x.color}/>
         ))}
     </div>

@@ -1,18 +1,23 @@
-import React, { useContext } from 'react'
+import { FC, useContext } from 'react'
 import { useForm } from 'react-hook-form';
-import Context from '../context/Context'
+import { ElementContext, ContextInterface } from '../context/Context'
 
-type Props = {}
+interface TitleInput {
+  title: string
+}
 
-function TitleInput({}: Props) {
+// Handles the input of the Chart title
+const TitleInput: FC = () => {
 
-  const { title, setTitle } = useContext(Context) || { title: null, setTitle: () => {} };
-  // VER SI HACEN FALTA TODSOS, SINO BORRAR
-  const { reset, register, handleSubmit, formState: { errors } } = useForm();
+  // Gets the state setter for the title
+  const { setTitle } = useContext(ElementContext) as ContextInterface;
 
-  const onSubmit = (data: any) => {
+  const { reset, register, handleSubmit } = useForm<TitleInput>();
+
+  // On submit, makes the first letter uppercase and sets the new title
+  const onSubmit = (data: TitleInput) => {
     const newTitle: string = data.title.charAt(0).toUpperCase() + data.title.slice(1)
-    if(setTitle) setTitle(newTitle);
+    setTitle(newTitle);
     reset();
   }
 
@@ -33,7 +38,7 @@ function TitleInput({}: Props) {
               placeholder='Title'
               className='peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0'/>
             <span className='pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-[#ececec] px-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs'>
-              Name
+              Title
             </span>
             </label>
         </div>
